@@ -1,0 +1,45 @@
+﻿@model List<CMSMU.Models.Student>
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>Index</h2>
+<a href="~/Student/Create" class="btn btn-default">Create</a>
+@{
+    if (Model.Count == 0)
+    {
+        <div class="alert alert-info" role="alert">
+            <strong>Oops!</strong> No students data available
+        </div>
+    }
+    else
+    {
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Action</th>
+    </tr>
+
+    @{
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Email</td>
+                <td>
+                    <a href="~/Student/Edit/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a> |
+                    <a href="~/Student/Delete/@item.Id" onclick="return confirm('Do you want to Delete @item.FirstName');"><i class="glyphicon glyphicon-remove text-danger"></i></a>
+                </td>
+            </tr>
+
+        }
+    }
+</table>
+            }
+        }
