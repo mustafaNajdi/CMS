@@ -1,0 +1,35 @@
+﻿@model List<CMS.Models.Faculty>
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>Index</h2>
+@{
+    if (Model.Count == 0)
+    {
+        <div class="alert alert-info" role="alert">
+            <strong>Oops!</strong> No data available
+        </div>
+    }
+    else
+
+    {
+        <table class="table table-bordered">
+            <tr>
+                <th>Faculty</th>
+                <th>Action</th>
+            </tr>
+
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                    </tr>
+
+                }
+            }
+        </table>
+                }
+}
