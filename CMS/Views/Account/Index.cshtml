@@ -1,0 +1,40 @@
+﻿@model List<CMS.Models.User>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@{
+    if (Model.Count == 0)
+    {
+        <div class="alert alert-info" role="alert">
+            <strong>Oops!</strong> No Users data available
+        </div>
+    }
+    else
+
+    {
+        <table class="table table-bordered">
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Email</td>
+                        <td>@item.Role</td>
+                      
+                    </tr>
+
+                }
+            }
+        </table>
+                }
+}
