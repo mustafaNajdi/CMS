@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1d07ae7bfd5748d2b3377a3a4a151eda" Name="Diagram1">
+        <EntityTypeShape EntityType="CMSdbModel.Batch" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.CertificateType" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.DeliveryType" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.Faculty" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.Faculty_Batch" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.Payment" Width="1.5" PointX="7.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.Request_Certificate" Width="1.5" PointX="7.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.Request" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.Role" Width="1.5" PointX="9.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.Student" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.sysdiagram" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSdbModel.User" Width="1.5" PointX="12" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="CMSdbModel.FK_Faculty_Batch_Batches" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSdbModel.FK_Request_Certificate_CertificateTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSdbModel.FK_Requests_DeliveryTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSdbModel.FK_Faculty_Batch_Faculties" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSdbModel.FK_Students_Faculties" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSdbModel.FK_Payment_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSdbModel.FK_Request_Certificate_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSdbModel.FK_Requests_Students" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSdbModel.FK_Users_Roles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
