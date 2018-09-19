@@ -1,0 +1,36 @@
+﻿@model CMS.Models.Student
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Student", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.FirstName, Model.FirstName, new { @class = "col-md-8 form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.LastName, Model.LastName, new { @class = "col-md-8 form-control" })
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.Email, Model.Email, new { @class = "col-md-8 form-control" })
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.StudentIndex, new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.PhoneNumber, Model.PhoneNumber, new { @class = "col-md-8 form-control" })
+
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Edit</button>
+        </div>
+    </div>
+
+
+}
