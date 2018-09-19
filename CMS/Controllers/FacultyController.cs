@@ -13,5 +13,21 @@ namespace CMS.Controllers
         {
             return View();
         }
+        public ActionResult BatcIndex()
+        {
+            return View();
+        }
+        public ActionResult CreateFaculty()
+        {
+            return View();
+        }
+        public ActionResult CreateBatch()
+        {
+            return View();
+        }
+        public ActionResult EditFaculty()
+        {
+            return View();
+        }
     }
 }
