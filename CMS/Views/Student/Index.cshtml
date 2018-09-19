@@ -1,0 +1,44 @@
+﻿@model List<CMS.Models.Student>
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>Index</h2>
+@{
+    if (Model.Count == 0)
+    {
+        <div class="alert alert-info" role="alert">
+            <strong>Oops!</strong> No students data available
+        </div>
+    }
+    else
+
+    {
+        <table class="table table-bordered">
+            <tr>
+                <th>Index</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.StudentIndex</td>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>@item.Email</td>
+                        <td>
+                            <a href="~/Student/Edit/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a> |
+                        </td>
+                    </tr>
+
+                }
+            }
+        </table>
+                }
+}
