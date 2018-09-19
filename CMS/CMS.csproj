@@ -204,6 +204,9 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\Create.cshtml" />
     <Content Include="Views\Student\Edit.cshtml" />
+    <Content Include="Views\Certificate\Index.cshtml" />
+    <Content Include="Views\Certificate\Create.cshtml" />
+    <Content Include="Views\Certificate\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -213,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Certificate\" />
     <Folder Include="Views\Delivery\" />
     <Folder Include="Views\Faculty\" />
     <Folder Include="Views\Request\" />
