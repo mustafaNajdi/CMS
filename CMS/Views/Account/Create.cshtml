@@ -1,27 +1,44 @@
 ﻿@using CMS.Models
 @model User
 @{
+    /**/
+
     ViewBag.Title = "Create";
 }
 
 <h2>Create</h2>
-@using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+<hr />
+@using (Html.BeginForm("Create", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     <div></div>
     <div class="form-group">
+        @Html.Label("First Name", new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "col-md-8 form-control",placeholder="First Name..." })
+    </div>
+    <div class="form-group">
+        @Html.Label("Last Name", new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.LastName, new { @class = "col-md-8 form-control", placeholder = "Last Name..." })
+    </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        @Html.TextBoxFor(m => m.Email, new { @class = "col-md-8 form-control" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "col-md-8 form-control", placeholder = "example@example.com" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        @Html.PasswordFor(m => m.Password, new { @class = "col-md-8 form-control" })
-
+        @Html.PasswordFor(m => m.Password, new { @class = "col-md-8 form-control", placeholder = "********" })
     </div>
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Create</button>
+        @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
+        @Html.DropDownListFor(m => m.RoleId, (IEnumerable<SelectListItem>)ViewBag.Roles, "Select Role", new { @class = "col-md-8 form-control" })
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2">
+            <input type="submit" class="btn btn-default" value="Create" />
         </div>
     </div>
 
 
 }
+<ul class="pager">
+    <li class="previous"><a href="~/Account/"><span aria-hidden="true">&larr;</span> Back</a></li>
+</ul>

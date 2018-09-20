@@ -35,7 +35,6 @@ namespace CMS.Models
         public virtual DbSet<Request> Requests { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Student> Students { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

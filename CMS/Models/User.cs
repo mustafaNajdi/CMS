@@ -21,6 +21,8 @@ namespace CMS.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     
         public virtual Role Role { get; set; }
     }

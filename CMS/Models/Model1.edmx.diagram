@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="CMSdbModel.Request" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CMSdbModel.Role" Width="1.5" PointX="9.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CMSdbModel.Student" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CMSdbModel.sysdiagram" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CMSdbModel.User" Width="1.5" PointX="12" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="CMSdbModel.FK_Faculty_Batch_Batches" ManuallyRouted="false" />
         <AssociationConnector Association="CMSdbModel.FK_Request_Certificate_CertificateTypes" ManuallyRouted="false" />
