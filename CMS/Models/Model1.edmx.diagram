@@ -25,6 +25,8 @@
         <AssociationConnector Association="CMSdbModel.FK_Request_Certificate_Requests" ManuallyRouted="false" />
         <AssociationConnector Association="CMSdbModel.FK_Requests_Students" ManuallyRouted="false" />
         <AssociationConnector Association="CMSdbModel.FK_Users_Roles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CMSdbModel.StudentTemporaryUrl" Width="1.5" PointX="10.375" PointY="4.75" />
+        <AssociationConnector Association="CMSdbModel.FK_StudentTemporaryUrl_Students" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

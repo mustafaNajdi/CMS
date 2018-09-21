@@ -114,6 +114,17 @@
           <Property Name="PhotoPath" Type="nvarchar(max)" />
           <Property Name="CreatedDate" Type="date" />
         </EntityType>
+        <EntityType Name="StudentTemporaryUrl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" />
+          <Property Name="ShortCode" Type="int" />
+          <Property Name="Generated" Type="datetime" />
+          <Property Name="Expires" Type="datetime" />
+          <Property Name="IsUsed" Type="bit" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -224,6 +235,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StudentTemporaryUrl_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="StudentTemporaryUrl" Type="Self.StudentTemporaryUrl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentTemporaryUrl">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Users_Roles">
           <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -247,6 +270,7 @@
           <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentTemporaryUrl" EntityType="Self.StudentTemporaryUrl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Faculty_Batch_Batches" Association="Self.FK_Faculty_Batch_Batches">
             <End Role="Batches" EntitySet="Batches" />
@@ -279,6 +303,10 @@
           <AssociationSet Name="FK_Students_Faculties" Association="Self.FK_Students_Faculties">
             <End Role="Faculties" EntitySet="Faculties" />
             <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentTemporaryUrl_Students" Association="Self.FK_StudentTemporaryUrl_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="StudentTemporaryUrl" EntitySet="StudentTemporaryUrl" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
             <End Role="Roles" EntitySet="Roles" />
@@ -414,6 +442,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Faculty" Relationship="Self.FK_Students_Faculties" FromRole="Students" ToRole="Faculties" />
           <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_Students" FromRole="Students" ToRole="Requests" />
+          <NavigationProperty Name="StudentTemporaryUrls" Relationship="CMSdbModel.FK_StudentTemporaryUrl_Students" FromRole="Student" ToRole="StudentTemporaryUrl" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -586,7 +615,36 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="StudentTemporaryUrls" EntityType="CMSdbModel.StudentTemporaryUrl" />
+          <AssociationSet Name="FK_StudentTemporaryUrl_Students" Association="CMSdbModel.FK_StudentTemporaryUrl_Students">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentTemporaryUrl" EntitySet="StudentTemporaryUrls" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="StudentTemporaryUrl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" />
+          <Property Name="ShortCode" Type="Int32" />
+          <Property Name="Generated" Type="DateTime" Precision="3" />
+          <Property Name="Expires" Type="DateTime" Precision="3" />
+          <Property Name="IsUsed" Type="Boolean" />
+          <NavigationProperty Name="Student" Relationship="CMSdbModel.FK_StudentTemporaryUrl_Students" FromRole="StudentTemporaryUrl" ToRole="Student" />
+        </EntityType>
+        <Association Name="FK_StudentTemporaryUrl_Students">
+          <End Type="CMSdbModel.Student" Role="Student" Multiplicity="0..1" />
+          <End Type="CMSdbModel.StudentTemporaryUrl" Role="StudentTemporaryUrl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentTemporaryUrl">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -724,6 +782,18 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentTemporaryUrls">
+            <EntityTypeMapping TypeName="CMSdbModel.StudentTemporaryUrl">
+              <MappingFragment StoreEntitySet="StudentTemporaryUrl">
+                <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+                <ScalarProperty Name="Expires" ColumnName="Expires" />
+                <ScalarProperty Name="Generated" ColumnName="Generated" />
+                <ScalarProperty Name="ShortCode" ColumnName="ShortCode" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

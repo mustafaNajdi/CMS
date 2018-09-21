@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Request</h2>
+<hr />
+
+<div class="row request-page">
+    <div class="form-horizontal">
+        @Html.Hidden("StudentId", 0);
+        <div class="form-group">
+            @Html.Label("Phone Number", new { @class = "col-md-3 control-label" })
+            <div class="col-md-5 no-padding">
+                @Html.TextBox("PhoneNumber", null, new { @class = "form-control", placeholder = "Enter Student Phone Number...." })
+                <span class="text-danger" id="PhoneErr" style="display:none"> Please enter valid number !</span>
+            </div>
+            <div class="col-md-2 inline-btn">
+                <button type="button" id="CheckPhone" class="btn btn-primary">Check!</button>
+            </div>
+        </div>
+        <div class="code-section" style="display:none">
+            <div class="form-group">
+                @Html.Label("Code", new { @class = "col-md-3 control-label" })
+                <div class="col-md-5 no-padding">
+                    @Html.TextBox("Code", null, new { @class = "form-control", placeholder = "4 digit...." })
+                    <span class="text-danger" id="CodeErr" style="display:none"> Please enter valid Code !</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-5 no-padding">
+                    <button class="btn btn-primary" id="ConfirmCode">Confirm</button>
+                </div>
+            </div>
+        </div>
+            <div class="feedback-msg-error" style="display:none;">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                    <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                    <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3" />
+                    <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2" />
+                </svg>
+                <div class="svg-p">
+                    <span class="error">Sorry, no student found !</span>
+                </div>
+            </div>
+            <div class="feedback-msg" style="display:none;">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                    <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                    <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
+                </svg>
+                <div class="svg-p">
+                    <span class="success">Found it</span>
+                </div>
+            </div>
+
+
+            @*<div class="alert alert-success alert-check">
+            <strong><i class="fa fa-1x fa-check"></i> Found It!</strong>
+        </div>*@
+        </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        function ShowSuccessmsg() {
+            $(".feedback-msg").fadeIn();
+            setTimeout(function () {
+                $(".feedback-msg").fadeOut();
+            }, 5000);
+        }
+        function ShowErrormsg() {
+            $(".feedback-msg-error").fadeIn();
+            setTimeout(function () {
+                $(".feedback-msg-error").fadeOut();
+            }, 3000);
+        }
+
+        $(document).ready(function () {
+            var phone = $("#PhoneNumber");
+            var code = $("#Code");
+            var StudentId = $("#StudentId");
+            var phone_pattern = /([0-9]{10})/;
+            var code_pattern = /([0-9]{4})/;
+            $("#CheckPhone").click(function () {
+                if (phone != null && phone_pattern.test(phone.val())) {
+                    phone.parent().parent().removeClass("has-error");
+                    $("#PhoneErr").hide();
+                    $.ajax({
+                        url: '../Request/CheckPhone?PhoneNumber=' + phone.val(),
+                        type: 'GET',
+                        data: JSON.stringify({ PhoneNumber: phone.val() }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                            if (result > 0) {
+                                ShowSuccessmsg();
+                                StudentId.val(result);
+                                alert(result);
+                                $(".code-section").show(1000);
+                            }
+                            else {
+                                ShowErrormsg();                                
+                            }
+                        }
+                    })
+                }
+                else {
+                    phone.parent().parent().addClass("has-error");
+                    $("#PhoneErr").show();
+                }
+            })
+            $("#ConfirmCode").click(function () {
+                if (code.val() != null && code_pattern.test(code.val())) {
+                    code.parent().parent().removeClass("has-error");
+                    $("#CodeErr").hide();
+                    var data = {
+                        Code: code.val(),
+                        StudentId: StudentId.val()
+                    };
+                    $.ajax({
+                        url: '../Request/CheckCode?Code=' + code.val() + '&StudentId=' + StudentId.val(),
+                        type: 'GET',
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                            if (result) {
+                                ShowSuccessmsg();
+                                $(".code-section").show(1000);
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+}
+
