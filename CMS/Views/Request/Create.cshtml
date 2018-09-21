@@ -59,8 +59,25 @@
         </div>*@
         </div>
 </div>
+
+<div id="Student">
+    @{Html.RenderPartial("_StudentRequest"); }
+</div>
+
+
 @section scripts{
     <script type="text/javascript">
+        function readIMG(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
         function ShowSuccessmsg() {
             $(".feedback-msg").fadeIn();
             setTimeout(function () {
@@ -131,6 +148,9 @@
                     })
                 }
             })
+            $("#fileUploader").change(function () {
+                readIMG(this);
+            });
         })
     </script>
 }

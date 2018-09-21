@@ -27,7 +27,8 @@ namespace CMS
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/all.css",
-                      "~/Content/fontawesome.css"));
+                      "~/Content/fontawesome.css",
+                      "~/Content/pretty-checkbox.css"));
         }
     }
 }

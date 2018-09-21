@@ -20,6 +20,8 @@ namespace CMS.Controllers
         }
         public ActionResult Create()
         {
+            ViewBag.Certificates = db.CertificateTypes.Where(c => c.IsDeleted != true).ToList();
+            ViewBag.Delivery = db.DeliveryTypes.Where(d => d.IsDeleted != true).ToList();
             return View();
         }
         public JsonResult CheckPhone(string PhoneNumber)
