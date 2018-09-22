@@ -1,10 +1,26 @@
 ﻿@model List<CMS.Models.Student>
 @{
+    Layout = "~/Views/Shared/_LayoutUsers.cshtml";
     ViewBag.Title = "Index";
 
 }
 
 <h2>Index</h2>
+<hr />
+@{
+    if (TempData["Feedback"] != null)
+    {
+        <div class='alert alert-success alert-dismissable'>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong><i class="fa fa-1x fa-check"></i> Success</strong>
+            <span>@TempData["Feedback"]</span>
+        </div>
+    }
+}
+<a href="~/Student/Create" class="btn btn-default"> <i class="fa fa-plus"></i> &nbsp; Add Student</a>
+<br />
+<br />
+
 @{
     if (Model.Count == 0)
     {
@@ -33,7 +49,7 @@
                         <td>@item.LastName</td>
                         <td>@item.Email</td>
                         <td>
-                            <a href="~/Student/Edit/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a> |
+                            <a href="~/Student/Edit/@item.Id" class="btn btn-sm btn-warning"><i class="fa fa-1x fa-user-edit"></i> Edit</a>
                         </td>
                     </tr>
 

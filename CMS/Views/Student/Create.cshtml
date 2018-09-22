@@ -1,38 +1,43 @@
 ﻿@using CMS.Models
+
 @model Student
 @{
+    Layout = "~/Views/Shared/_LayoutUsers.cshtml";
     ViewBag.Title = "Create";
 }
 
 <h2>Create</h2>
-
-@using (Html.BeginForm("Create", "Student", FormMethod.Post, new { @class = "form-horizontal" }))
+<hr />
+@using (Html.BeginForm("Create", "Student", FormMethod.Post,new { enctype = "multipart/form-data" }))
 {
     <div></div>
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
-        @Html.TextBoxFor(m => m.FirstName, new { @class = "col-md-8 form-control" })
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "col-md-8 form-control", placeholder = "First Name..." })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
-        @Html.TextBoxFor(m => m.LastName, new { @class = "col-md-8 form-control" })
+        @Html.TextBoxFor(m => m.LastName, new { @class = "col-md-8 form-control",Placeholder = "Last Name..." })
 </div>
 <div class="form-group">
     @Html.LabelFor(m => m.StudentIndex, new { @class = "col-md-2 control-label" })
-    @Html.TextBoxFor(m => m.StudentIndex, new { @class = "col-md-8 form-control" })
+    @Html.TextBoxFor(m => m.StudentIndex, new { @class = "col-md-8 form-control",placeholder = "Student Index..." })
 </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        @Html.TextBoxFor(m => m.Email, new { @class = "col-md-8 form-control" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "col-md-8 form-control", placeholder = "Email..." })
   </div>
     <div class="form-group">
         @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
-        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "col-md-8 form-control" })
+        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "col-md-8 form-control", placeholder = "Phone Number..." })
  </div>
 <div class="form-group">
     @Html.LabelFor(m => m.Faculty, new { @class = "col-md-2 control-label" })
-    @Html.TextBoxFor(m => m.Faculty, new { @class = "col-md-8 form-control" })
+    @Html.TextBoxFor(m => m.Faculty, new { @class = "col-md-8 form-control", placeholder = "Faculty..." })
 </div>
+    <div>
+        <input type="file" name="ImageFile" required />
+    </div>
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
@@ -42,3 +47,6 @@
 
 
 }
+<ul class="pager">
+    <li class="previous"><a href="~/Student/"><span aria-hidden="true">&larr;</span> Back</a></li>
+</ul>

@@ -56,7 +56,7 @@ namespace CMS.Controllers
             Us.IsDeleted = true;
             Context.Entry(Us).State = System.Data.Entity.EntityState.Modified;
             Context.SaveChanges();
-            TempData["Feedback"] = Us.FirstName + " " + Us.LastName + " has been delete successfully";
+            TempData["Feedback"] = Us.FirstName + " " + Us.LastName + " has been deleted successfully";
             return RedirectToAction("Index");
 
         }

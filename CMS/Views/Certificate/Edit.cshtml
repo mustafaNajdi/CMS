@@ -1,26 +1,46 @@
 ﻿@model CMS.Models.CertificateType
 @{
+    Layout = "~/Views/Shared/_LayoutUsers.cshtml";
     ViewBag.Title = "Edit";
 }
 
 <h2>Edit</h2>
+<div></div>
 
-@using (Html.BeginForm("Edit", "Certificate", FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm())
 {
-    <div class="form-group">
-        @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
-        @Html.TextBoxFor(m => m.Type, Model.Type, new { @class = "col-md-8 form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Price, new { @class = "col-md-2 control-label" })
-        @Html.EditorFor(m => m.Price,new { @class = "col-md-8 form-control" })
+    @Html.AntiForgeryToken()
 
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Edit</button>
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        @using (Html.BeginForm("Edit", "Certificate", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Type, Model.Type, new { @class = "col-md-8 form-control", placeholder = "Certificate Type..." })
+                    </div>
+                </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Price, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.Price, new { @class = "col-md-8 form-control", placeholder = "Price..." })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+        }
         </div>
-    </div>
 
-
-}
+        <div>
+            <ul class="pager">
+                <li class="previous"><a href="~/Certificate/"><span aria-hidden="true">&larr;</span> Back</a></li>
+            </ul>
+        </div>
