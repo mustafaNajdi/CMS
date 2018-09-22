@@ -8,7 +8,7 @@
 
 <div class="row request-page">
     <div class="form-horizontal">
-        @Html.Hidden("StudentId", 0);
+        @Html.Hidden("StudentId", 0)
         <div class="form-group">
             @Html.Label("Phone Number", new { @class = "col-md-3 control-label" })
             <div class="col-md-5 no-padding">
@@ -61,7 +61,7 @@
 </div>
 
 <div id="Student">
-    @{Html.RenderPartial("_StudentRequest"); }
+    @{ Html.RenderPartial("_StudentRequest");}
 </div>
 
 
@@ -94,9 +94,12 @@
         $(document).ready(function () {
             var phone = $("#PhoneNumber");
             var code = $("#Code");
+            var total = 0;
+            var prvqty = 0;
             var StudentId = $("#StudentId");
             var phone_pattern = /([0-9]{10})/;
             var code_pattern = /([0-9]{4})/;
+            $("#TotalPrice").text(total + " SDG");
             $("#CheckPhone").click(function () {
                 if (phone != null && phone_pattern.test(phone.val())) {
                     phone.parent().parent().removeClass("has-error");
@@ -135,15 +138,16 @@
                     };
                     $.ajax({
                         url: '../Request/CheckCode?Code=' + code.val() + '&StudentId=' + StudentId.val(),
-                        type: 'GET',
+                        type: 'post',
                         data: JSON.stringify(data),
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
+                        async: true,                       
+                        contentType: "application/javascript",
                         success: function (result) {
-                            if (result) {
-                                ShowSuccessmsg();
-                                $(".code-section").show(1000);
-                            }
+                            alert(result);
+                            $("#Student").html(result);                            
+                        },
+                        error: function (xhr) {
+                            alert(xhr.status)
                         }
                     })
                 }
@@ -151,6 +155,42 @@
             $("#fileUploader").change(function () {
                 readIMG(this);
             });
+            $(".p-round").find("input[id='option[2]']").click(function () {
+                total += 500;
+                $("#TotalPrice").text(Number(total).toLocaleString('en') + " SDG");
+                $("#DeliveryAddress").show(1000);            
+            });
+            $(".p-round").find("input[id='option[1]']").click(function () {
+                if ($("#DeliveryAddress").css('display') != 'none') {
+                    total = total - 500;
+                    $("#TotalPrice").text(Number(total).toLocaleString('en') + " SDG");
+                }
+                $("#DeliveryAddress").hide();
+            });
+            $("input[type=checkbox]").change(function () {
+                var qty = $(this).parent().next("input[class='form-control counter-input']").val()
+                if ($(this).is(':checked')) {                 
+                    total =total+ (parseInt($(this).next("input[name='price']").val())*qty);
+                    $("#TotalPrice").text(Number(total).toLocaleString('en') + " SDG");
+                }
+                else {
+                    total =total- (parseInt($(this).next("input[name='price']").val())*qty);
+                    $("#TotalPrice").text(Number(total).toLocaleString('en') + " SDG");
+                }
+            })
+            $("input[class='form-control counter-input']").on('focus', function () {
+                prvqty = parseInt($(this).val());               
+            })
+            $("input[class='form-control counter-input']").blur(function () {
+                if ($(this).prev().find("input[type=checkbox]").is(':checked')) {
+                    var qty = parseInt($(this).val());
+                    var price = parseInt($(this).prev().find("input[name='price']").val());
+                    total = total - (price * prvqty);
+                    total = total + (price * qty);
+                    $("#TotalPrice").text(Number(total).toLocaleString('en') + " SDG");
+                }
+                
+            })
         })
     </script>
 }

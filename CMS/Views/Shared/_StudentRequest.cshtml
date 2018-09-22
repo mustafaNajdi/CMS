@@ -3,7 +3,6 @@
     List<CMS.Models.CertificateType> certificates = ViewBag.Certificates;
     List<CMS.Models.DeliveryType> deliveryTypes = ViewBag.Delivery;
 }
-
 <div class="panel panel-info">
     <div class="panel-heading"><h4>Student Details</h4></div>
     <div class="panel-body">
@@ -12,36 +11,36 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Index:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.StudentIndex*@
-                        2492017
+                        @*@Model.Student.StudentIndex*@    
+                        342786
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Full Name:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.FirstName @Model.Student.LastName*@
+                        @*@Model.Student.FirstName @Model.Student.LastName*@    
                         Abbas Omar
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Faculty:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.Faculty.Name*@
+                        @*@Model.Student.Faculty.Name*@        
                         Computer Science
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Phone Number:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.PhoneNumber*@
-                        0912130176
+                        @*@Model.Student.PhoneNumber*@ 
+                        0912398126
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Email:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.Email*@
-                        awad@gmail.com
+                        @*@Model.Student.Email*@    
+                        omar@gmail.com
                     </p>
                 </div>
                 <div class="form-group">
@@ -71,7 +70,8 @@
                                 i++;
                                 <div class="certificate-elements">
                                     <div class="pretty p-svg p-curve">
-                                        <input type="checkbox" />
+                                        <input type="checkbox" value="@item.Id" id="Request_Certificate.CertificateId[@i]" name="Request_Certificate.CertificateId[@i]" />
+                                        @Html.Hidden("price",item.Price)
                                         <div class="state p-success">
                                             <!-- svg path -->
                                             <svg class="svg svg-icon" viewBox="0 0 20 20">
@@ -80,7 +80,7 @@
                                             <label>@item.Type (@item.Price SDG)</label>
                                         </div>
                                     </div>
-                                    <input type="number" value="1" id="Qty[@i]" class="form-control counter-input" />
+                                    <input type="number" value="1" id="Qty[@i]" name="Qty[@i]" class="form-control counter-input" />
                                 </div>
                             }
                         }
@@ -89,14 +89,25 @@
                         <h3>Delivery</h3>
                         <hr />
                         @{
+                            int j = 0;
                             foreach (var item in deliveryTypes)
                             {
+                                j++;
                                 <div class="pretty p-svg p-round">
-                                    <input type="radio" value="@item.Id" name="Request.DeliveryId" />
-                                    <div class="state p-success">
-                                        <label>@item.Type </label>
+                                    <input type="radio" id="option[@j]" value="@item.Id" name="Request.DeliveryId" />
+                                    <div class="state p-primary">
+                                        <label>@item.Type
+                                            @if (item.Type == "DHL")
+                                            {
+                                                <span>(500 SDG)</span>
+                                            }
+                                        </label>
                                     </div>
                                 </div>
+                                if (item.Type == "DHL")
+                                {
+                                    <input type="text" style="display:none" placeholder="Enter Address..." id="DeliveryAddress" name="Request.DeliveryAddress" class="form-control address-input" />
+                                }
                             }
                         }
                     </div>
@@ -112,17 +123,17 @@
                         <hr />
                         <div class="form-group">
                             <label class="col-md-3 control-label">Total:</label>
-                            <p class="form-control-static col-md-8">
-                                1,200 SDG
+                            <p class="form-control-static col-md-8" id="TotalPrice">
+                                
                             </p>
                         </div>                       
                         <input type="submit" class="btn btn-lg btn-block btn-success" value="Submit" />
                     </div>
                 </div>
-            }
+                            }
         }
     </div>
 </div>
-
+   
 
 
