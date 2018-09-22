@@ -15,7 +15,7 @@ namespace CMS.Controllers
         {
             List<CertificateType> Cer = new List<CertificateType>();
 
-            Cer = Context.CertificateTypes.ToList();
+            Cer = Context.CertificateTypes.Where(u => u.IsDeleted != true).ToList();
 
             return View(Cer);
         }
@@ -26,13 +26,16 @@ namespace CMS.Controllers
         [HttpPost]
         public ActionResult Create(CertificateType Cer)
         {
+            Cer.CreatedDate = DateTime.Now;
+            Cer.UpdatedDate = DateTime.Now;
             Context.CertificateTypes.Add(Cer);
             Context.SaveChanges();
+            TempData["Feedback"] = Cer.Type + " " +"with price "+ Cer.Price + " has been added successfully";
+
             return RedirectToAction("Index");
         }
         public ActionResult Edit(int Id)
-        {
-            
+        { 
             CertificateType Cer = Context.CertificateTypes.Find(Id);
             return View(Cer);
         }
@@ -44,9 +47,14 @@ namespace CMS.Controllers
             Context.SaveChanges();
             return RedirectToAction("Index");
         }
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
-            return View();
+            CertificateType Cer = Context.CertificateTypes.Find(id);
+            Cer.IsDeleted = true;
+            Context.Entry(Cer).State = System.Data.Entity.EntityState.Modified;
+            Context.SaveChanges();
+            TempData["Feedback"] = Cer.Type + " " + "with price " + Cer.Price + " has been deleted successfully";
+            return RedirectToAction("Index");
         }
     }
 }

@@ -24,8 +24,10 @@ namespace CMS.Controllers
         [HttpPost]
         public ActionResult Create(Student stu)
         {
+            stu.CreatedDate = DateTime.Now;
             Context.Students.Add(stu);
             Context.SaveChanges();
+            TempData["Feedback"] = stu.FirstName + " " + stu.LastName + " has been added successfully";
             return RedirectToAction("Index");
         }
         public ActionResult Edit(int Id)
