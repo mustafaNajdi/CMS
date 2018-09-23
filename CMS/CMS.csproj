@@ -150,7 +150,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="webfonts\fa-brands-400.ttf" />
     <Content Include="webfonts\fa-brands-400.woff" />
@@ -268,6 +270,7 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Request\ViewRequests.cshtml" />
     <Content Include="Views\Request\RequestPayment.cshtml" />
+    <Content Include="Views\Request\SendMesg.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

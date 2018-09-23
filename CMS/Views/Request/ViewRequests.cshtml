@@ -31,7 +31,7 @@
                 </td>
                 <td>@string.Format("{0:n0}", item.TotalPrice) SDG</td>
                 <td>@item.DeliveryType.Type</td>
-                <td>@item.CreatedDate</td>
+                <td>@item.CreatedDate.Value.ToShortDateString()</td>
                 <td>
                     @{
                         if (item.IsApproved == null)

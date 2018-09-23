@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CMS.Models;
 using System.IO;
+using System.IO.Ports;
 
 namespace CMS.Controllers
 {
@@ -12,10 +13,69 @@ namespace CMS.Controllers
     public class RequestController : Controller
     {
         CMSdb db = new CMSdb();
-        
+        private const string SERIAL_PORT_NAME = "COM4";
+
+        private static SerialPort _modemConnection;
         // GET: Request
         public ActionResult Index()
         {          
+            return View();
+        }
+        public void SendSms(string Phone, string Msg)
+        {
+            _modemConnection.WriteLine("ATE0");
+            var response = _modemConnection.ReadExisting();
+
+            // Set text mode
+            _modemConnection.WriteLine("AT+CMGF=1");
+            response = _modemConnection.ReadExisting();
+
+            // Send the SMS
+            _modemConnection.WriteLine(String.Format
+               ("AT+CMGS=\"{0}\"", Phone));
+            response = _modemConnection.ReadExisting();
+
+            _modemConnection.Write(Msg);
+            _modemConnection.Write(new byte[] { 26 }, 0, 1);
+
+            response = _modemConnection.ReadExisting();
+
+            if (response.Contains("ERROR"))
+            {
+                Console.WriteLine("SMS Failed to send");
+            }
+            else
+            {
+                Console.WriteLine("SMS Sent");
+                Console.WriteLine("Response: {0}", response);
+            }
+        }
+        public ActionResult SendMesg()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SendMesg(FormCollection fm)
+        {
+            _modemConnection = new SerialPort(SERIAL_PORT_NAME)
+            {
+                // 19200 baud, most modems will accept everything
+                // from 9600 up to 115200
+                BaudRate = 19200,
+                // 99% of the time the port connection will be
+                //8 Data bits
+                DataBits = 8,
+                // NO partiy
+                Parity = Parity.None,
+                // and 1 stop bit. Check your modem manual if
+                // this doesn't work
+                StopBits = StopBits.One
+            };
+            _modemConnection.Open();
+
+            SendSms(fm["number"], fm["msg"]);
+
+            _modemConnection.Close();
             return View();
         }
         public ActionResult Create()
@@ -32,7 +92,8 @@ namespace CMS.Controllers
                 string _FileName = Path.GetFileName(file.FileName);
                 string _path = Path.Combine(Server.MapPath("~/Content/images"), _FileName);
                 file.SaveAs(_path);
-                Student stu = db.Students.Where(s => s.Id == int.Parse(fm["StudentId"])).FirstOrDefault();
+                int x = int.Parse(fm["StudentId"]);
+                Student stu = db.Students.Where(s => s.Id == x).FirstOrDefault();
                 stu.PhotoPath = "~/Content/images/" + _FileName;
                 db.Entry(stu).State = System.Data.Entity.EntityState.Modified;
                 int count = db.CertificateTypes.Where(c => c.IsDeleted != true).Count();
@@ -46,10 +107,11 @@ namespace CMS.Controllers
                 };
                 db.Requests.Add(request);
                 db.SaveChanges();
-                Request_Certificate request_Certificate = new Request_Certificate();
+                
 
                 for (int i = 1; i <= count; i++)
-                {                   
+                {
+                    Request_Certificate request_Certificate = new Request_Certificate();
                     if (fm["CertificateId[" + i +"]"]!=null)
                     {
                         request_Certificate.Quantity = int.Parse(fm["Qty[" + i + "]"]);
@@ -60,9 +122,10 @@ namespace CMS.Controllers
                     }
                 }
                 db.SaveChanges();
+                return RedirectToAction("RequestPayment", new { id = request.Id });
             }
-
             return View();
+           
         } 
         public ActionResult RequestPayment(int id)
         {
@@ -79,7 +142,7 @@ namespace CMS.Controllers
             db.Payments.Add(payment);
             request.IsPaid = true;
             db.SaveChanges();
-            return RedirectToAction("ViewRequests",new {id=request.Id });
+            return RedirectToAction("ViewRequests",new {id=request.StudentId });
         }
         public ActionResult ViewRequests(int id)
         {
@@ -135,12 +198,12 @@ namespace CMS.Controllers
                 Student student = db.Students.Where(s => s.Id == StudentId).FirstOrDefault();
                 StudentRequestViewModelcs modelcs = new StudentRequestViewModelcs();
                 modelcs.Student = student;
-                return PartialView("_StudentRequest", modelcs);            
+                return PartialView("_StudentRequest", modelcs);
             }
             else
             {
-                return View();
+                return Json(false,JsonRequestBehavior.AllowGet);
             }
         }
-    }
+    }    
 }
