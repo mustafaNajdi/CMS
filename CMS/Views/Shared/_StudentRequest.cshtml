@@ -11,35 +11,35 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Index:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.StudentIndex*@    
+                        @*@Model.Student.StudentIndex*@
                         342786
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Full Name:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.FirstName @Model.Student.LastName*@    
+                        @*@Model.Student.FirstName @Model.Student.LastName*@
                         Abbas Omar
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Faculty:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.Faculty.Name*@        
+                        @*@Model.Student.Faculty.Name*@
                         Computer Science
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Phone Number:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.PhoneNumber*@ 
+                        @*@Model.Student.PhoneNumber*@
                         0912398126
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Email:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.Email*@    
+                        @*@Model.Student.Email*@
                         omar@gmail.com
                     </p>
                 </div>
@@ -57,7 +57,7 @@
     <div class="panel-heading"><h4>Request Details</h4></div>
     <div class="panel-body">
         @{
-            using (Html.BeginForm())
+            using (Html.BeginForm("Create", "Request"))
             {
                 <div class="form-horizontal">
                     <div id="Certificate-section">
@@ -70,8 +70,8 @@
                                 i++;
                                 <div class="certificate-elements">
                                     <div class="pretty p-svg p-curve">
-                                        <input type="checkbox" value="@item.Id" id="Request_Certificate.CertificateId[@i]" name="Request_Certificate.CertificateId[@i]" />
-                                        @Html.Hidden("price",item.Price)
+                                        <input type="checkbox" value="@item.Id" id="CertificateId[@i]" name="CertificateId[@i]" />
+                                        @Html.Hidden("price", item.Price)
                                         <div class="state p-success">
                                             <!-- svg path -->
                                             <svg class="svg svg-icon" viewBox="0 0 20 20">
@@ -94,21 +94,22 @@
                             {
                                 j++;
                                 <div class="pretty p-svg p-round">
-                                    <input type="radio" id="option[@j]" value="@item.Id" name="Request.DeliveryId" />
+                                    <input type="radio" id="option[@j]" value="@item.Id" name="DeliveryId" />
                                     <div class="state p-primary">
-                                        <label>@item.Type
-                                            @if (item.Type == "DHL")
-                                            {
-                                                <span>(500 SDG)</span>
-                                            }
-                                        </label>
-                                    </div>
+                                        <label>
+                                            @item.Type
+                                        @if (item.Type == "DHL")
+                                        {
+                                            <span>(500 SDG)</span>
+                                        }
+                                    </label>
                                 </div>
-                                if (item.Type == "DHL")
-                                {
-                                    <input type="text" style="display:none" placeholder="Enter Address..." id="DeliveryAddress" name="Request.DeliveryAddress" class="form-control address-input" />
-                                }
+                            </div>
+                            if (item.Type == "DHL")
+                            {
+                               <input type="text" style="display:none" placeholder="Enter Address..." id="DeliveryAddress" name="DeliveryAddress" class="form-control address-input" />
                             }
+                        }
                         }
                     </div>
                     <div id="Student-section">
@@ -124,16 +125,16 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Total:</label>
                             <p class="form-control-static col-md-8" id="TotalPrice">
-                                
+
                             </p>
-                        </div>                       
+                        </div>
                         <input type="submit" class="btn btn-lg btn-block btn-success" value="Submit" />
                     </div>
                 </div>
-                            }
+            }
         }
     </div>
 </div>
-   
+
 
 

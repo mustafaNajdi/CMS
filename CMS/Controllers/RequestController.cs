@@ -22,7 +22,14 @@ namespace CMS.Controllers
             ViewBag.Certificates = db.CertificateTypes.Where(c => c.IsDeleted != true).ToList();
             ViewBag.Delivery = db.DeliveryTypes.Where(d => d.IsDeleted != true).ToList();
             return View();
-        }
+        }       
+        [HttpPost]
+        public ActionResult Create(FormCollection fm)
+        {
+
+            return View();
+        }     
+
         public JsonResult CheckPhone(string PhoneNumber)
         {
             if(db.Students.Where(s=>s.PhoneNumber==PhoneNumber).Count()>0)
