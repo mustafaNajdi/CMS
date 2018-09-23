@@ -14,8 +14,7 @@ namespace CMS.Controllers
         
         // GET: Request
         public ActionResult Index()
-        {
-            
+        {          
             return View();
         }
         public ActionResult Create()
@@ -45,21 +44,26 @@ namespace CMS.Controllers
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
-        }
-        public JsonResult CheckCode(int Code,int StudentId)
+        }       
+        [HttpPost]
+        public ActionResult CheckCode(int Code,int StudentId)
         {
-            StudentTemporaryUrl temporaryUrl = db.StudentTemporaryUrls.Where(c => c.StudentId == StudentId).LastOrDefault();
+            ViewBag.Certificates = db.CertificateTypes.Where(c => c.IsDeleted != true).ToList();
+            ViewBag.Delivery = db.DeliveryTypes.Where(d => d.IsDeleted != true).ToList();
+            StudentTemporaryUrl temporaryUrl = db.StudentTemporaryUrls.Where(c => c.StudentId == StudentId).OrderByDescending(s=>s.Generated).FirstOrDefault();
             if (temporaryUrl.ShortCode== Code && temporaryUrl.Expires>DateTime.Now && temporaryUrl.IsUsed!=true)
             {
                 temporaryUrl.IsUsed = true;
                 db.Entry(temporaryUrl).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 Student student = db.Students.Where(s => s.Id == StudentId).FirstOrDefault();
-                return Json(student, JsonRequestBehavior.AllowGet);            
+                StudentRequestViewModelcs modelcs = new StudentRequestViewModelcs();
+                modelcs.Student = student;
+                return PartialView("_StudentRequest", modelcs);            
             }
             else
             {
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return View();
             }
         }
     }
