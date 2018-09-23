@@ -266,6 +266,7 @@
     <Content Include="Views\Request\Create.cshtml" />
     <Content Include="Views\Shared\_StudentRequest.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
