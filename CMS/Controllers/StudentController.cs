@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CMS.Models;
+using System.IO;
 
 namespace CMS.Controllers
 {
@@ -22,8 +23,15 @@ namespace CMS.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(Student stu)
+        public ActionResult Create(Student stu,HttpPostedFileBase File)
         {
+            if (File != null)
+            {
+                string pic = System.IO.Path.GetFileName(File.FileName);
+                string path = System.IO.Path.Combine(Server.MapPath("~/Conent/images"), pic);
+                File.SaveAs(path);
+            }
+            stu.PhotoPath = "~/Conyent/images" + File.FileName;
             stu.CreatedDate = DateTime.Now;
             Context.Students.Add(stu);
             Context.SaveChanges();
