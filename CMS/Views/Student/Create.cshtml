@@ -35,10 +35,9 @@
     @Html.LabelFor(m => m.Faculty, new { @class = "col-md-2 control-label" })
     @Html.TextBoxFor(m => m.Faculty, new { @class = "col-md-8 form-control", placeholder = "Faculty..." })
 </div>
-    <div>
-        <input type="file" name="ImageFile" required />
-    </div>
-
+<label for="file">Upload Image:</label>
+    <input type="file" name="file" id="file" style="width: 100%;" />
+    <input type="submit" value="Upload" class="submit" />
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-default">Create</button>
