@@ -28,10 +28,10 @@ namespace CMS.Controllers
             if (File != null)
             {
                 string pic = System.IO.Path.GetFileName(File.FileName);
-                string path = System.IO.Path.Combine(Server.MapPath("~/Conent/images"), pic);
+                string path = System.IO.Path.Combine(Server.MapPath("~/Content/images"), pic);
                 File.SaveAs(path);
             }
-            stu.PhotoPath = "~/Conyent/images" + File.FileName;
+            stu.PhotoPath = "~/Content/images" + File.FileName;
             stu.CreatedDate = DateTime.Now;
             Context.Students.Add(stu);
             Context.SaveChanges();

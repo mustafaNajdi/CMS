@@ -263,6 +263,8 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Request\Create.cshtml" />
     <Content Include="Views\Shared\_StudentRequest.cshtml" />
+    <Content Include="Views\Request\ViewRequests.cshtml" />
+    <Content Include="Views\Request\RequestPayment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

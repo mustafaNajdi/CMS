@@ -11,36 +11,36 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Index:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.StudentIndex*@
-                        342786
+                        @Model.Student.StudentIndex
+                       
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Full Name:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.FirstName @Model.Student.LastName*@
-                        Abbas Omar
+                        @Model.Student.FirstName @Model.Student.LastName
+                       
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Faculty:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.Faculty.Name*@
-                        Computer Science
+                        @Model.Student.Faculty.Name
+                      
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Phone Number:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.PhoneNumber*@
-                        0912398126
+                        @Model.Student.PhoneNumber
+                        
                     </p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Email:</label>
                     <p class="form-control-static col-md-8">
-                        @*@Model.Student.Email*@
-                        omar@gmail.com
+                        @Model.Student.Email
+                    
                     </p>
                 </div>
                 <div class="form-group">
@@ -57,80 +57,87 @@
     <div class="panel-heading"><h4>Request Details</h4></div>
     <div class="panel-body">
         @{
-            using (Html.BeginForm("Create", "Request"))
+            using (Html.BeginForm("Create", "Request", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <div class="form-horizontal">
-                    <div id="Certificate-section">
-                        <h3>Certificates</h3>
-                        <hr />
-                        @{
-                            int i = 0;
-                            foreach (var item in certificates)
-                            {
-                                i++;
-                                <div class="certificate-elements">
-                                    <div class="pretty p-svg p-curve">
-                                        <input type="checkbox" value="@item.Id" id="CertificateId[@i]" name="CertificateId[@i]" />
-                                        @Html.Hidden("price", item.Price)
-                                        <div class="state p-success">
-                                            <!-- svg path -->
-                                            <svg class="svg svg-icon" viewBox="0 0 20 20">
-                                                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
-                                            </svg>
-                                            <label>@item.Type (@item.Price SDG)</label>
-                                        </div>
-                                    </div>
-                                    <input type="number" value="1" id="Qty[@i]" name="Qty[@i]" class="form-control counter-input" />
-                                </div>
-                            }
-                        }
-                    </div>
-                    <div id="Delivery-section">
-                        <h3>Delivery</h3>
-                        <hr />
-                        @{
-                            int j = 0;
-                            foreach (var item in deliveryTypes)
-                            {
-                                j++;
-                                <div class="pretty p-svg p-round">
-                                    <input type="radio" id="option[@j]" value="@item.Id" name="DeliveryId" />
-                                    <div class="state p-primary">
-                                        <label>
-                                            @item.Type
-                                        @if (item.Type == "DHL")
-                                        {
-                                            <span>(500 SDG)</span>
-                                        }
-                                    </label>
+                @Html.Hidden("StudentId", 0)
+        <div class="form-horizontal">
+            <div id="Certificate-section">
+                <h3>Certificates</h3>
+                <hr />
+                @{
+                    int i = 0;
+                    foreach (var item in certificates)
+                    {
+                        i++;
+                        <div class="certificate-elements">
+                            <div class="pretty p-svg p-curve">
+                                <input type="checkbox" value="@item.Id" id="CertificateId[@i]" name="CertificateId[@i]" />
+                                @Html.Hidden("price", item.Price)
+                                <div class="state p-success">
+                                    <!-- svg path -->
+                                    <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                        <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                    </svg>
+                                    <label>@item.Type (@item.Price SDG)</label>
                                 </div>
                             </div>
-                            if (item.Type == "DHL")
-                            {
-                               <input type="text" style="display:none" placeholder="Enter Address..." id="DeliveryAddress" name="DeliveryAddress" class="form-control address-input" />
-                            }
-                        }
-                        }
-                    </div>
-                    <div id="Student-section">
-                        <h3>Photo</h3>
-                        <hr />
-                        <div style="width:200px;margin:0px auto">
-                            <img id="preview" src="~/Content/images/user.png" class="img-thumbnail" width="200" height="200" alt="Avatar image" />
-                            <input type="file" id="fileUploader" />
+                            <input type="number" value="1" id="Qty[@i]" name="Qty[@i]" class="form-control counter-input" />
                         </div>
-                    </div>
-                    <div id="Final-section" style="width:200px;margin:0px auto">
-                        <hr />
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Total:</label>
-                            <p class="form-control-static col-md-8" id="TotalPrice">
-
-                            </p>
+                    }
+                }
+            </div>
+            <div id="Delivery-section">
+                <h3>Delivery</h3>
+                <hr />
+                @{
+                    int j = 0;
+                    foreach (var item in deliveryTypes)
+                    {
+                        j++;
+                        <div class="pretty p-svg p-round">
+                            <input type="radio" id="option[@j]" value="@item.Id" name="DeliveryId" />
+                            <div class="state p-primary">
+                                <label>
+                                    @item.Type
+                                    @if (item.Type == "DHL")
+                                    {
+                                        <span>(500 SDG)</span>
+                                    }
+                                </label>
+                            </div>
                         </div>
-                        <input type="submit" class="btn btn-lg btn-block btn-success" value="Submit" />
-                    </div>
+                        if (item.Type == "DHL")
+                        {
+                            <input type="text" style="display:none" placeholder="Enter Address..." id="DeliveryAddress" name="DeliveryAddress" class="form-control address-input" />
+                        }
+                    }
+                }
+            </div>
+            <div id="Student-section">
+                <h3>Photo</h3>
+                <hr />
+                <div style="width:200px;margin:0px auto">
+                    <img id="preview" src="~/Content/images/user.png" class="img-thumbnail" width="200" height="200" alt="Avatar image" />
+                    <input type="file" id="fileUploader" name="file" />
                 </div>
+                <div id="PhotoErr" style="text-align: center;margin: 10px 0px; display:none;">
+                    <span class="text-danger" >Invalid file extension, use(png,jpg,jpeg)</span>
+                </div>               
+            </div>
+            <hr />
+            <div id="Final-section" style="width:200px;margin:0px auto">
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Total:</label>
+                    @Html.Hidden("TotalPriceHidden")
+                    <p class="form-control-static col-md-8" id="TotalPrice">
+
+                    </p>
+                </div>
+                <input type="submit" id="SubmitForm" class="btn btn-lg btn-block btn-success" value="Submit" />
+
+            </div>
+        </div>
             }
         }
     </div>

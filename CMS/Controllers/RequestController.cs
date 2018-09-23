@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CMS.Models;
+using System.IO;
 
 namespace CMS.Controllers
 {
@@ -24,11 +25,66 @@ namespace CMS.Controllers
             return View();
         }       
         [HttpPost]
-        public ActionResult Create(FormCollection fm)
+        public ActionResult Create(HttpPostedFileBase file, FormCollection fm)
         {
+            if(file.ContentLength>0)
+            {
+                string _FileName = Path.GetFileName(file.FileName);
+                string _path = Path.Combine(Server.MapPath("~/Content/images"), _FileName);
+                file.SaveAs(_path);
+                Student stu = db.Students.Where(s => s.Id == int.Parse(fm["StudentId"])).FirstOrDefault();
+                stu.PhotoPath = "~/Content/images/" + _FileName;
+                db.Entry(stu).State = System.Data.Entity.EntityState.Modified;
+                int count = db.CertificateTypes.Where(c => c.IsDeleted != true).Count();
+                Request request = new Request{
+                    DeliveryId = int.Parse(fm["DeliveryId"]),
+                    StudentId = int.Parse(fm["StudentId"]),
+                    TotalPrice = int.Parse(fm["TotalPriceHidden"]),
+                    DeliveryAddress = fm["DeliveryAddress"] != null ? fm["DeliveryAddress"] : null,
+                    CreatedDate=DateTime.Now,
+                    UpdatedDate=DateTime.Now
+                };
+                db.Requests.Add(request);
+                db.SaveChanges();
+                Request_Certificate request_Certificate = new Request_Certificate();
+
+                for (int i = 1; i <= count; i++)
+                {                   
+                    if (fm["CertificateId[" + i +"]"]!=null)
+                    {
+                        request_Certificate.Quantity = int.Parse(fm["Qty[" + i + "]"]);
+                        request_Certificate.CertificateId = int.Parse(fm["CertificateId[" + i + "]"]);
+                        request_Certificate.CreatedDate = DateTime.Now;
+                        request_Certificate.ReqId = request.Id;
+                        db.Request_Certificate.Add(request_Certificate);
+                    }
+                }
+                db.SaveChanges();
+            }
 
             return View();
-        }     
+        } 
+        public ActionResult RequestPayment(int id)
+        {
+            Payment payment = new Payment();
+            payment.Amount = db.Requests.Where(p => p.Id == id).Select(s => s.TotalPrice).FirstOrDefault();
+            return View(payment);
+        }
+        [HttpPost]
+        public ActionResult RequestPayment(int id,Payment payment)
+        {
+            Request request = db.Requests.Find(id);
+            payment.ReqId = request.Id;
+            payment.CreatedDate = DateTime.Now;
+            db.Payments.Add(payment);
+            request.IsPaid = true;
+            db.SaveChanges();
+            return RedirectToAction("ViewRequests",new {id=request.Id });
+        }
+        public ActionResult ViewRequests(int id)
+        {
+            return View(db.Requests.Where(r => r.StudentId == id).OrderByDescending(o => o.UpdatedDate).ToList());
+        }
 
         public JsonResult CheckPhone(string PhoneNumber)
         {
@@ -51,7 +107,20 @@ namespace CMS.Controllers
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
-        }       
+        }    
+        public JsonResult AjaxViewRequest(string PhoneNumber)
+        {
+            if (db.Students.Where(s => s.PhoneNumber == PhoneNumber).Count() > 0)
+            {
+                int StudentId = db.Students.Where(s => s.PhoneNumber == PhoneNumber).Select(p => p.Id).FirstOrDefault();
+
+                return Json(StudentId, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
         [HttpPost]
         public ActionResult CheckCode(int Code,int StudentId)
         {
