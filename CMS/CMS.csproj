@@ -171,6 +171,8 @@
     <Compile Include="Controllers\CertificateController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\FacultyController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
@@ -263,6 +265,9 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Request\Create.cshtml" />
     <Content Include="Views\Shared\_StudentRequest.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Request\ViewRequests.cshtml" />
     <Content Include="Views\Request\RequestPayment.cshtml" />
     <None Include="Web.Debug.config">

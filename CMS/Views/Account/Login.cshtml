@@ -1,0 +1,28 @@
+﻿@using CMS.Models
+@model User
+@{
+    /**/
+    Layout = "~/Views/Shared/_LayoutUsers.cshtml";
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+<hr />
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div></div>
+    <div class="form-group">
+        @Html.Label("Email", new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "col-md-8 form-control", placeholder = "Email..." })
+    </div>
+    <div class="form-group">
+        @Html.Label("Password", new { @class = "col-md-2 control-label" })
+        @Html.PasswordFor(m => m.Password, new { @class = "col-md-8 form-control", placeholder = "Password..." })
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2">
+            <input type="submit" class="btn btn-default" value="Login" />
+        </div>
+    </div>
+
+}

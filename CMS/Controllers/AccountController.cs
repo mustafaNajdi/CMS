@@ -60,5 +60,11 @@ namespace CMS.Controllers
             return RedirectToAction("Index");
 
         }
+        public ActionResult Login()
+        {
+
+            return View();
+        }
+
     }
 }
