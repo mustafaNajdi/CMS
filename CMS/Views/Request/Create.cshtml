@@ -5,12 +5,9 @@
 
 <h2>Request</h2>
 <hr />
-<div>
-    <div class="alert alert-success">Thank You</div>
-</div>
 <div class="row request-page">
     <div class="form-horizontal">
-        
+        <input type="hidden" value="0" id="StuId" />
         <div class="form-group">
             @Html.Label("Phone Number", new { @class = "col-md-3 control-label" })
             <div class="col-md-5 no-padding">
@@ -36,220 +33,182 @@
                 </div>
             </div>
         </div>
-            <div class="feedback-msg-error" style="display:none;">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-                    <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
-                    <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3" />
-                    <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2" />
-                </svg>
-                <div class="svg-p">
-                    <span class="error">Sorry, no student found !</span>
-                </div>
+        <div class="feedback-msg-error" style="display:none;">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3" />
+                <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2" />
+            </svg>
+            <div class="svg-p">
+                <span class="error">Sorry, no student found !</span>
             </div>
-            <div class="feedback-msg" style="display:none;">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-                    <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
-                    <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
-                </svg>
-                <div class="svg-p">
-                    <span class="success">Found it</span>
-                </div>
+        </div>
+        <div class="feedback-msg-error" id="usedcode" style="display:none;">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3" />
+                <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2" />
+            </svg>
+            <div class="svg-p">
+                <span class="error">Code is used or expired</span>
             </div>
+        </div>
+        <div class="feedback-msg" style="display:none;">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
+            </svg>
+            <div class="svg-p">
+                <span class="success">Found it</span>
+            </div>
+        </div>
 
 
-            @*<div class="alert alert-success alert-check">
+        @*<div class="alert alert-success alert-check">
             <strong><i class="fa fa-1x fa-check"></i> Found It!</strong>
         </div>*@
-        </div>
+    </div>
 </div>
 
-<div id="Student">      
+<div id="Student">
 </div>
+<script src="/Scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+    function readIMG(input) {
+        var file = input.files[0];
+        var fileType = file["type"];
+        alert(fileType);
+        var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+        if ($.inArray(fileType, ValidImageTypes) < 0) {
+            $("#PhotoErr").fadeIn();
+            setTimeout(function () {
+                $("#PhotoErr").fadeOut();
+            }, 5000)
+        }
+        else {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function ShowSuccessmsg() {
+        $(".feedback-msg").fadeIn();
+        setTimeout(function () {
+            $(".feedback-msg").fadeOut();
+        }, 5000);
+    }
+    function ShowErrormsg() {
+        $(".feedback-msg-error").fadeIn();
+        setTimeout(function () {
+            $(".feedback-msg-error").fadeOut();
+        }, 3000);
+    }
+    function ShowErrormsgCode() {
+        $("#usedcode").fadeIn();
+        setTimeout(function () {
+            $("#usedcode").fadeOut();
+        }, 3000);
+    }
+    function validate(file) {
+        var ext = file.split(".");
+        ext = ext[ext.length - 1].toLowerCase();
+        var arrayExtensions = ["jpg", "jpeg", "png", "bmp", "gif"];
 
+        if (arrayExtensions.lastIndexOf(ext) == -1) {
+            alert("Wrong extension type.");
+            $("#image").val("");
+        }
+    }
 
-@section scripts{
-    <script type="text/javascript">
-        function readIMG(input) {
-            var file = input.files[0];
-            var fileType = file["type"];
-            alert(fileType);
-            var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
-            if ($.inArray(fileType, ValidImageTypes) < 0) {
-                $("#PhotoErr").fadeIn();
-                setTimeout(function () {
-                    $("#PhotoErr").fadeOut();
-                }, 5000)
+    $(document).ready(function () {
+        var phone = $("#PhoneNumber");
+        var code = $("#Code");       
+        var StuId = $("#StuId");       
+        var phone_pattern = /([0-9]{10})/;
+        var code_pattern = /([0-9]{4})/;       
+        $("#CheckPhone").click(function () {
+            if (phone != null && phone_pattern.test(phone.val())) {
+                phone.parent().parent().removeClass("has-error");
+                $("#PhoneErr").hide();
+                $.ajax({
+                    url: '../Request/CheckPhone?PhoneNumber=' + phone.val(),
+                    type: 'GET',
+                    data: JSON.stringify({ PhoneNumber: phone.val() }),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        if (result > 0) {
+                            ShowSuccessmsg();                            
+                            StuId.val(result);                            
+                            $(".code-section").show(1000);
+                        }
+                        else {
+                            ShowErrormsg();
+                        }
+                    }
+                })
             }
             else {
-                var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $('#preview').attr('src', e.target.result);
-                    }                
-                    reader.readAsDataURL(input.files[0]);
-            }           
-        }
-        function ShowSuccessmsg() {
-            $(".feedback-msg").fadeIn();
-            setTimeout(function () {
-                $(".feedback-msg").fadeOut();
-            }, 5000);
-        }
-        function ShowErrormsg() {
-            $(".feedback-msg-error").fadeIn();
-            setTimeout(function () {
-                $(".feedback-msg-error").fadeOut();
-            }, 3000);
-        }
-        function validate(file) {
-            var ext = file.split(".");
-            ext = ext[ext.length - 1].toLowerCase();
-            var arrayExtensions = ["jpg", "jpeg", "png", "bmp", "gif"];
-
-            if (arrayExtensions.lastIndexOf(ext) == -1) {
-                alert("Wrong extension type.");
-                $("#image").val("");
+                phone.parent().parent().addClass("has-error");
+                $("#PhoneErr").show();
             }
-        }
-
-        $(document).ready(function () {
-            var phone = $("#PhoneNumber");
-            var code = $("#Code");
-            var total = 0;
-            var prvqty = 0;
-            var StudentId = $("#StudentId");
-            var phone_pattern = /([0-9]{10})/;
-            var code_pattern = /([0-9]{4})/;
-            $("#TotalPrice").text(total + " SDG");
-            $("#TotalPriceHidden").val(total);
-            $("#CheckPhone").click(function () {
-                if (phone != null && phone_pattern.test(phone.val())) {
-                    phone.parent().parent().removeClass("has-error");
-                    $("#PhoneErr").hide();
-                    $.ajax({
-                        url: '../Request/CheckPhone?PhoneNumber=' + phone.val(),
-                        type: 'GET',
-                        data: JSON.stringify({ PhoneNumber: phone.val() }),
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (result) {
-                            if (result > 0) {
-                                ShowSuccessmsg();
-                                StudentId.val(result);
-                                alert(result);
-                                $(".code-section").show(1000);
-                            }
-                            else {
-                                ShowErrormsg();                                
-                            }
-                        }
-                    })
-                }
-                else {
-                    phone.parent().parent().addClass("has-error");
-                    $("#PhoneErr").show();
-                }
-            })
-            $("#ConfirmCode").click(function () {
-                if (code.val() != null && code_pattern.test(code.val())) {
-                    code.parent().parent().removeClass("has-error");
-                    $("#CodeErr").hide();
-                    var data = {
-                        Code: code.val(),
-                        StudentId: StudentId.val()
-                    };
-                    $.ajax({
-                        url: '../Request/CheckCode?Code=' + code.val() + '&StudentId=' + StudentId.val(),
-                        type: 'post',
-                        data: JSON.stringify(data),
-                        async: true,                       
-                        contentType: "application/javascript",
-                        success: function (result) {
-                            alert(result);
-                            $("#Student").html(result);                            
-                        },
-                        error: function (xhr) {
-                            alert(xhr.status)
-                        }
-                    })
-                }
-            })
-            $("#fileUploader").change(function () {
-                readIMG(this);
-            });
-            $(".p-round").find("input[id='option[2]']").click(function () {
-                total += 500;
-                $("#TotalPrice").text(Number(total).toLocaleString('en') + " SDG");
-                $("#TotalPriceHidden").val(total);
-                $("#DeliveryAddress").show(1000);            
-            });
-            $(".p-round").find("input[id='option[1]']").click(function () {
-                if ($("#DeliveryAddress").css('display') != 'none') {
-                    total = total - 500;
-                    $("#TotalPrice").text(Number(total).toLocaleString('en') + " SDG");
-                    $("#TotalPriceHidden").val(total);
-                }
-                $("#DeliveryAddress").hide();
-            });
-            $("input[type=checkbox]").change(function () {
-                var qty = $(this).parent().next("input[class='form-control counter-input']").val()
-                if ($(this).is(':checked')) {                 
-                    total = total + (parseInt($(this).next("input[name='price']").val()) * qty);
-                    $("#TotalPriceHidden").val(total);
-                    $("#TotalPrice").text(Number(total).toLocaleString('en') + " SDG");
-                }
-                else {
-                    total = total - (parseInt($(this).next("input[name='price']").val()) * qty);
-                    $("#TotalPriceHidden").val(total);
-                    $("#TotalPrice").text(Number(total).toLocaleString('en') + " SDG");
-                }
-            })
-            $("input[class='form-control counter-input']").on('focus', function () {
-                prvqty = parseInt($(this).val());               
-            })
-            $("input[class='form-control counter-input']").blur(function () {
-                if ($(this).prev().find("input[type=checkbox]").is(':checked')) {
-                    var qty = parseInt($(this).val());
-                    var price = parseInt($(this).prev().find("input[name='price']").val());
-                    total = total - (price * prvqty);
-                    total = total + (price * qty);
-                    $("#TotalPriceHidden").val(total);
-                    $("#TotalPrice").text(Number(total).toLocaleString('en') + " SDG");
-                }
-                
-            })
-            $("#ViewRequest").click(function () {
-                if (phone == null && !phone_pattern.test(phone.val())) {
-                    phone.parent().parent().addClass("has-error");
-                    $("#PhoneErr").show();
-                }
-                else {
-                    $.ajax({
-                        url: '../Request/AjaxViewRequest?PhoneNumber=' + phone.val(),
-                        type: 'GET',
-                        data: JSON.stringify({ PhoneNumber: phone.val() }),
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (result) {
-                            if (!result) {
-                                ShowErrormsg();
-                            }
-                            else {
-                                window.location.href = "ViewRequests/" + result;
-                            }
-                        }
-                    })
-                }
-            })
-            $("#SubmitForm").click(function (e) {
-                if (!$("#fileUploader").val()) {
-                    e.preventDefault();
-                    alert("Please Upload your photo !");
-                }
-                else {
-                    alert("Thank You :)");
-                }
-            })
         })
-    </script>
-}
+        $("#ConfirmCode").click(function () {
+            if (code.val() != null && code_pattern.test(code.val())) {
+                code.parent().parent().removeClass("has-error");
+                $("#CodeErr").hide();
+                var data = {
+                    Code: code.val(),
+                    StudentId: StuId.val()
+                };
+                $.ajax({
+                    url: '../Request/CheckCode?Code=' + code.val() + '&StudentId=' + StuId.val(),
+                    type: 'post',
+                    data: JSON.stringify(data),
+                    async: true,
+                    contentType: "application/javascript",
+                    success: function (result) {
+                        //alert(result);
+                        if (result) {
+                            $("#Student").html(result);
+                        }
+                        else {
+                            ShowErrormsgCode();
+                        }
+                    },
+                    error: function (xhr) {
+                        alert(xhr.status)
+                    }
+                })
+            }
+        })
+        $("#ViewRequest").click(function () {
+            if (phone == null && !phone_pattern.test(phone.val())) {
+                phone.parent().parent().addClass("has-error");
+                $("#PhoneErr").show();
+            }
+            else {
+                $.ajax({
+                    url: '../Request/AjaxViewRequest?PhoneNumber=' + phone.val(),
+                    type: 'GET',
+                    data: JSON.stringify({ PhoneNumber: phone.val() }),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        if (!result) {
+                            ShowErrormsg();
+                        }
+                        else {
+                            window.location.href = "ViewRequests/" + result;
+                        }
+                    }
+                })
+            }
+        })
+
+    })
+</script>
+
 

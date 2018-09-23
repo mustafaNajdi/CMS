@@ -3,25 +3,26 @@
     ViewBag.Title = "RequestPayment";
 }
 
-<h2>RequestPayment</h2>
+<h2>Payment</h2>
+<hr />
 @using (Html.BeginForm())
 {
 <div class="form-horizontal">
     <div class="form-group">
         @Html.Label("Full Name", new { @class = "col-md-2 control-label" })
-        @Html.TextBox("FullName", new { @class = "col-md-8 form-control", placeholder = "Full Name..." })
+        @Html.TextBox("FullName",null, new { @class = "col-md-8 form-control", placeholder = "Full Name..." })
     </div>
     <div class="form-group">
-        @Html.Label("Credit Card No.", new { @class = "col-md-2 control-label" })
-        @Html.TextBox("CardNo", new { @class = "col-md-8 form-control", Placeholder = "Card No...." })
+        @Html.Label("Credit Card", new { @class = "col-md-2 control-label" })
+        @Html.TextBox("CardNo", null, new { @class = "col-md-8 form-control", Placeholder = "Card No...." })
     </div>
     <div class="form-group">
         @Html.Label("Card Date", new { @class = "col-md-2 control-label" })
-        @Html.TextBox("CardDate", new { @class = "col-md-8 form-control", placeholder = "yy/mm" })
+        @Html.TextBox("CardDate", null, new { @class = "col-md-8 form-control", placeholder = "yy/mm" })
     </div>
     <div class="form-group">
         @Html.Label("CVV", new { @class = "col-md-2 control-label" })
-        @Html.TextBox("Cvv", new { @class = "col-md-2 form-control", placeholder = "CVV..." })
+        @Html.TextBox("Cvv", null, new { @class = "col-md-1 form-control", placeholder = "CVV..." })
     </div>
     <div class="form-group">
         @Html.Label("Amount", new { @class = "col-md-2 control-label" })
