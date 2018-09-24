@@ -1,5 +1,4 @@
 ﻿@using CMS.Models
-
 @model Student
 @{
     Layout = "~/Views/Shared/_LayoutUsers.cshtml";
@@ -33,13 +32,13 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Faculty, new { @class = "col-md-2 control-label" })
-            @Html.TextBoxFor(m => m.Faculty, new { @class = "col-md-8 form-control", placeholder = "Faculty..." })
+            @Html.DropDownListFor(m => m.FacultyId, (IEnumerable<SelectListItem>)ViewBag.Faculties, "Select Faculty", new { @class = "col-md-8 form-control" })
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label">Photo</label>
             <p class="form-control-static col-md-8">
                 <img id="preview" src="~/Content/images/user.png" class="img-thumbnail" width="200" height="200" />
-                <input type="file" id="fileUploader" name="fileUploader" />
+                <input type="file" id="fileUploader" name="File" />
             </p>
         </div>
         <br /><br />

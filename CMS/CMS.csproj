@@ -171,7 +171,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CertificateController.cs" />
-    <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -261,7 +260,6 @@
     <Content Include="Views\Certificate\Edit.cshtml" />
     <Content Include="Views\Faculty\Index.cshtml" />
     <Content Include="Views\Faculty\CreateFaculty.cshtml" />
-    <Content Include="Views\Delivery\Index.cshtml" />
     <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutUsers.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />

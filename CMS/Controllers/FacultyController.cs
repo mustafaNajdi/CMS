@@ -14,7 +14,6 @@ namespace CMS.Controllers
         public ActionResult Index()
         {
             List<Faculty> Fcl = new List<Faculty>();
-
             Fcl = Context.Faculties.ToList();
             return View(Fcl);
         }
@@ -31,6 +30,7 @@ namespace CMS.Controllers
         {
             Context.Faculties.Add(Fcl);
             Context.SaveChanges();
+            TempData["Feedback"] = Fcl.Name +  " has been added successfully";
             return RedirectToAction("Index");
         }
         public ActionResult CreateBatch()

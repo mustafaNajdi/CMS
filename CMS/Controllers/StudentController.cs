@@ -20,11 +20,15 @@ namespace CMS.Controllers
         }
         public ActionResult Create()
         {
+            ViewBag.Faculties = new SelectList(Context.Faculties.Where(r => r.IsDeleted != true).ToList(), "Id", "Name");
+
             return View();
         }
         [HttpPost]
         public ActionResult Create(Student stu,HttpPostedFileBase File)
         {
+            ViewBag.Faculties = new SelectList(Context.Faculties.Where(r => r.IsDeleted != true).ToList(), "Id", "Name");
+
             if (File != null)
             {
                 string pic = System.IO.Path.GetFileName(File.FileName);
@@ -40,6 +44,7 @@ namespace CMS.Controllers
         }
         public ActionResult Edit(int Id)
         {
+            ViewBag.Faculties = new SelectList(Context.Faculties.Where(r => r.IsDeleted != true).ToList(), "Id", "Name");
             Student stu = Context.Students.Find(Id);
             return View(stu);
         }
