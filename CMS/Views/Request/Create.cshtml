@@ -15,7 +15,7 @@
                 <span class="text-danger" id="PhoneErr" style="display:none"> Please enter valid number !</span>
             </div>
             <div class="col-md-4 inline-btn">
-                <button type="button" id="CheckPhone" class="btn btn-primary">Check!</button>
+                <button type="button" id="CheckPhone" class="btn btn-primary">New Reuqest</button>
                 <a href="#" id="ViewRequest" class="btn btn-success"><i class="fa fa-list"></i> View Request</a>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="feedback-msg-error" style="display:none;">
+        <div class="feedback-msg-error" id="errphone" style="display:none;">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
                 <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
                 <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3" />
@@ -100,9 +100,9 @@
         }, 5000);
     }
     function ShowErrormsg() {
-        $(".feedback-msg-error").fadeIn();
+        $("#errphone").fadeIn();
         setTimeout(function () {
-            $(".feedback-msg-error").fadeOut();
+            $("#errphone").fadeOut();
         }, 3000);
     }
     function ShowErrormsgCode() {

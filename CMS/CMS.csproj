@@ -173,6 +173,7 @@
     <Compile Include="Controllers\CertificateController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\FacultyController.cs" />
+    <Compile Include="Controllers\ManageRequestController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
@@ -273,6 +274,7 @@
     <Content Include="Views\Request\ViewRequests.cshtml" />
     <Content Include="Views\Request\RequestPayment.cshtml" />
     <Content Include="Views\Request\SendMesg.cshtml" />
+    <Content Include="Views\ManageRequest\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

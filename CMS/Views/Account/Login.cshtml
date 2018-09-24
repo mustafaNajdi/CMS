@@ -1,28 +1,33 @@
-﻿@using CMS.Models
-@model User
+﻿@model CMS.Models.User
 @{
     /**/
-    Layout = "~/Views/Shared/_LayoutUsers.cshtml";
+    Layout = null;
     ViewBag.Title = "Login";
 }
-
-<h2>Login</h2>
-<hr />
-@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    <div></div>
-    <div class="form-group">
-        @Html.Label("Email", new { @class = "col-md-2 control-label" })
-        @Html.TextBoxFor(m => m.Email, new { @class = "col-md-8 form-control", placeholder = "Email..." })
-    </div>
-    <div class="form-group">
-        @Html.Label("Password", new { @class = "col-md-2 control-label" })
-        @Html.PasswordFor(m => m.Password, new { @class = "col-md-8 form-control", placeholder = "Password..." })
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2">
-            <input type="submit" class="btn btn-default" value="Login" />
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<body style="background-color: #ececec;">
+<div style="width:500px;margin:20px auto;    box-shadow: 0px 4px 5px -4px #0a0a0a;
+    padding: 15px;">
+    <img src="~/Content/images/MUlogo-sm.png" style="margin: 0px auto;" class="img-responsive" width="200" height="200" />
+    <h2>Login</h2>
+    <hr style="border-color:#333" />
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="form-group">
+            @Html.Label("Email", new { @class = "col-md-2 control-label" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "col-md-8 form-control", placeholder = "Email..." })
         </div>
-    </div>
+        <div class="form-group">
+            @Html.Label("Password", new { @class = "col-md-2 control-label" })
+            @Html.PasswordFor(m => m.Password, new { @class = "col-md-8 form-control", placeholder = "Password..." })
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                <input type="submit" class="btn btn-block btn-info" value="Login" />
+            </div>
+        </div>
 
-}
+    }
+</div>
+</body>

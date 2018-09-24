@@ -61,10 +61,24 @@ namespace CMS.Controllers
 
         }
         public ActionResult Login()
-        {
-
+        {        
             return View();
         }
-
+        [HttpPost]
+        public ActionResult Login(User user)
+        {
+            User usr = Context.Users.Where(u => u.Email == user.Email && u.Password == user.Password).FirstOrDefault();
+            if(usr==null)
+            {
+                ViewBag.Err = "Invalid Email or password";
+                return View();
+            }
+            else
+            {
+                Session["UserId"] = usr.Id;
+                Session["RoleId"] = usr.RoleId;
+                return RedirectToAction("Index", "ManageRequest");
+            }           
+        }
     }
 }

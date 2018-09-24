@@ -1,0 +1,172 @@
+﻿@model List<CMS.Models.Request>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUsers.cshtml";
+}
+
+<h2>Request List</h2>
+<hr />
+<br />
+<br />
+@{
+    if (TempData["S_msg"] != null)
+    {
+        <div class="alert alert-success">
+            <span>
+                <strong><i class="fa fa-check"></i> Success </strong>
+                @TempData["S_msg"]
+            </span>
+        </div>
+    }
+    else if (TempData["D_msg"] != null)
+    {
+        <div class="alert alert-success">
+            <span>
+                <strong><i class="fa fa-check"></i> Success </strong>
+                @TempData["D_msg"]
+            </span>
+        </div>
+    }
+    else if (TempData["Di_msg"] != null)
+    {
+        <div class="alert alert-success">
+            <span>
+                <strong><i class="fa fa-check"></i> Success </strong>
+                @TempData["Di_msg"]
+            </span>
+        </div>
+    }
+}
+@{
+    if (Session["RoleId"].ToString() == "2")
+    {
+        var StatisticRequests = Model.Where(m => m.IsChecked == null && m.IsPaid == true).OrderByDescending(o => o.UpdatedDate).ToList();
+        if (StatisticRequests.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>Student Index</th>
+                    <th>Student Name</th>
+                    <th>Certificate(s) Requested</th>
+                    <th>Paid Amount</th>
+                    <td>Date</td>
+                    <th>Action</th>
+                </tr>
+                @foreach (var item in StatisticRequests)
+                {
+                    <tr>
+                        <td>@item.Student.StudentIndex</td>
+                        <td>@item.Student.FirstName @item.Student.LastName</td>
+                        <td>
+                            @foreach (var crt in item.Request_Certificate)
+                            {
+                                <span>@crt.CertificateType.Type | </span>
+                            }
+                        </td>
+                        <td>@string.Format("{0:n0}", item.TotalPrice) SDG</td>
+                        <td>@item.CreatedDate.Value.ToShortDateString()</td>
+                        <td>
+                            <a href="~/ManageRequest/StatisticCheck/@item.Id?opt=1" class="btn btn-sm btn-success">Approve</a>
+                            <a href="~/ManageRequest/StatisticCheck/@item.Id?opt=2" class="btn btn-sm btn-danger">Reject</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                <strong>Oops!</strong> No Request data available
+            </div>
+        }
+    }
+    else if (Session["RoleId"].ToString() == "3")
+    {
+        var DeanRequests = Model.Where(m => m.IsChecked == true && m.IsPaid == true && m.IsApproved==null).OrderByDescending(o => o.UpdatedDate).ToList();
+        if (DeanRequests.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>Student Index</th>
+                    <th>Student Name</th>
+                    <th>Certificate(s) Requested</th>
+                    <th>Paid Amount</th>
+                    <td>Date</td>
+                    <th>Action</th>
+                </tr>
+                @foreach (var item in DeanRequests)
+                {
+                    <tr>
+                        <td>@item.Student.StudentIndex</td>
+                        <td>@item.Student.FirstName @item.Student.LastName</td>
+                        <td>
+                            @foreach (var crt in item.Request_Certificate)
+                            {
+                                <span>@crt.CertificateType.Type | </span>
+                            }
+                        </td>
+                        <td>@string.Format("{0:n0}", item.TotalPrice) SDG</td>
+                        <td>@item.CreatedDate.Value.ToShortDateString()</td>
+                        <td>
+                            <a href="~/ManageRequest/DeanCheck/@item.Id?opt=1" class="btn btn-sm btn-success">Approve</a>
+                            <a href="~/ManageRequest/DeanCheck/@item.Id?opt=2" class="btn btn-sm btn-danger">Reject</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                <strong>Oops!</strong> No Request data available
+            </div>
+        }
+    }
+    else if (Session["RoleId"].ToString() == "4")
+    {
+        var affairsRequests = Model.Where(m => m.IsChecked == true && m.IsPaid == true && m.IsApproved == true && m.IsDeliverd==null).OrderByDescending(o => o.UpdatedDate).ToList();
+        if (affairsRequests.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>Student Index</th>
+                    <th>Student Name</th>
+                    <th>Certificate(s) Requested</th>
+                    <th>Paid Amount</th>
+                    <th>Delivery</th>
+                    <td>Date</td>
+                    <th>Action</th>
+                </tr>
+                @foreach (var item in affairsRequests)
+                {
+                    <tr>
+                        <td>@item.Student.StudentIndex</td>
+                        <td>@item.Student.FirstName @item.Student.LastName</td>
+                        <td>
+                            @foreach (var crt in item.Request_Certificate)
+                            {
+                                <span>@crt.CertificateType.Type | </span>
+                            }
+                        </td>
+                        <td>@string.Format("{0:n0}", item.TotalPrice) SDG</td>
+                        <td>@item.DeliveryType.Type @item.DeliveryAddress</td>
+                        <td>@item.CreatedDate.Value.ToShortDateString()</td>
+                        <td>
+                            <a href="~/ManageRequest/Deliver/@item.Id" class="btn btn-sm btn-success">Deliver</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                <strong>Oops!</strong> No Request data available
+            </div>
+        }
+    }
+}
+
+
+
+
